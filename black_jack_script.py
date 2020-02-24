@@ -66,18 +66,19 @@ while game_on:
         # ----- Loop through active players to get their next moves -----
         active_players = helpers.get_active(players)               
         for player in active_players:
-            done = False
-            while done == False:
+            # done = False
+            player.show_hand()
+            print(str(player.total_hand()) + " points")
+            while True:
                 # Hit or Stay cards
-                player.show_hand()
-                print(str(player.total_hand()) + " points")
                 if player.total_hand() == 21:
                     print("Blackjack! Winner Winner Chicken Dinner")
                     print(player.name + " has " + str(player.total_hand()) + " points")
                     active_players.remove(player)
                     player.chips += player.bet_amount * 2
-                    done = True
                     print(divider)
+                    # done = True
+                    break
                 
                 hit_stay = input(player.name + " Hit(h) or Stay(s)?: ")
                 if hit_stay.lower() =="h":
@@ -89,16 +90,19 @@ while game_on:
                         print(str(points) + " points bust!")
                         active_players.remove(player)
                         player.bet_amount = 0
-                        done = True
+                        print(str(player.chips) + " chips left.")
                         print(divider)
+                        # done = True
+                        break
 
                     elif points == 21:
                         print("Blackjack! Winner Winner Chicken Dinner")
                         print(player.name + " has " + str(player.total_hand()) + " points")
                         active_players.remove(player)
                         player.chips += player.bet_amount * 2
-                        done = True
                         print(divider)
+                        # done = True
+                        break
                     
                     else:
                         print(player.name + " has " + str(points) + " points.")
@@ -106,8 +110,9 @@ while game_on:
 
                 elif hit_stay.lower() == "s":
                     print(player.name + " stays with " + str(player.total_hand())) 
-                    done = True
                     print(divider)
+                    # done = True
+                    break
 
                 else:
                     print("Not a valid choice.")
@@ -142,17 +147,17 @@ while game_on:
         if dealer_points >= 17 and dealer_points <= 21 and len(active_players) > 0:
             for player in active_players:
                 if player.total_hand() >= dealer_points:
+                    # ----- Winners -----
                     print(player.name + " beats the Dealer with " + str(player.total_hand()))
+                    player.chips += player.bet_amount * 2
+                    print(str(player.chips) + " chips stacked")
                     print(divider)
                 else:
+                    # ----- Losers -----
                     print(player.name + " loses to the Dealer with " + str(player.total_hand()))
                     print(str(player.chips) + " chips left")
                     active_players.remove(player)
                     print(divider)
-            
-            # Pay all players that beat the dealer
-            helpers.pay_winnings(active_players)
-            print(divider)
 
         # Reset Flags for next hand
         helpers.reset_players(players)
