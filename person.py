@@ -6,6 +6,10 @@ class Person:
         self.hand = []
         self.bet_amount = int
         self.playing = True
+
+    # String Representation
+    def __repr__(self):
+        return self.name
     
     # Function to gamble
     def bet(self, chips):
@@ -16,20 +20,25 @@ class Person:
     
     # Fold hand
     def fold(self):
+        print(self.name + ' folds')
         self.playing = False
 
     # Total Hand points
     def total_hand(self):
-        has_ace = False
+        aces = []
         point_total = 0
         for card in self.hand:
             if card.val == "Ace":
-                has_ace = True
-
+                aces.append(card)
             point_total += card.points
         
-        if point_total > 21 and has_ace:
-            point_total -= 10
+        # If Sore is over 21 and they have an Ace subtract 10 From their score
+        while point_total > 21:
+            if len(aces) > 0:
+                point_total -= 10
+                aces.pop()
+            else:
+                break
         
         return point_total
 

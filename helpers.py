@@ -7,6 +7,7 @@ def pay_winnings(players):
         p.chips += p.bet_amount * 2
         p.bet_amount = 0
         print(p.name + " now has " + str(p.chips) + " chips.")
+        print("=" * 25)
 
 # Reset all player flags for next hand
 def reset_players(players):
