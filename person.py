@@ -10,6 +10,10 @@ class Person:
     # String Representation
     def __repr__(self):
         return self.name
+
+    # Print Out
+    def __str__(self):
+        return self.name
     
     # Function to gamble
     def bet(self, chips):
